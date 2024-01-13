@@ -8,11 +8,11 @@ async function fetchWordList() {
 
 async function getRandomWords() {
     const words = await fetchWordList();
-    const randomWords = new Set();
+    const randomWords = [];
 
-    while (randomWords.size < 1000 && words.length > randomWords.size) {
+    while (randomWords.length < 1000) {
         const randomIndex = Math.floor(Math.random() * words.length);
-        randomWords.add(words[randomIndex]);
+        randomWords.push(words[randomIndex]);
     }
 
     return Array.from(randomWords);
@@ -36,7 +36,7 @@ function updateTimer() {
     let gameDurationS = 30
     let timeLeft = gameDurationS - progress
     timerElem.textContent = timeLeft
-    if (timeLeft < 0) {
+    if (timeLeft < 1) {
         endGame();
     } else {
         requestAnimationFrame(updateTimer);
@@ -118,7 +118,9 @@ textElem.addEventListener('keydown', function(event) {
     if (event.key == 'Backspace') {
         userInput = userInput.slice(0, -1);
     } else {
-        userInput += event.key
+        if (event.key.length == 1) {
+            userInput += event.key
+        }
     }
     updateTextElem();
 });
