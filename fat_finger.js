@@ -18,14 +18,48 @@ async function getRandomWords() {
     return Array.from(randomWords);
 }
 
+var containElem = document.getElementById("contain");
 var textElem = document.getElementById("keyLogger");
+var timerElem =  document.createElement("div");
+timerElem.id = "timer";
+timerElem.textContent = "30";
 let userInput = ""
 let goalText = ""
+let startTime = 0
 
 textElem.textContent = "Click here"
 textElem.style.whiteSpace = "nowrap";
 
-function startGame() {
+function updateTimer() {
+    time = Date.now();
+    let progress = Math.floor((time - startTime) / 1000)
+    let gameDurationS = 30
+    let timeLeft = gameDurationS - progress
+    timerElem.textContent = timeLeft
+    if (timeLeft < 0) {
+        endGame();
+    } else {
+        requestAnimationFrame(updateTimer);
+    }
+}
+
+function endGame() {
+    // wpm = keystrokes / 5 / 0.5 minutes
+    let wpm = userInput.length / 5 / 0.5
+    textElem.innerHTML = '';
+    var span = document.createElement('span');
+    span.textContent = "wpm = " + wpm
+    textElem.appendChild(span);
+    textElem.style.whiteSpace = "nowrap";
+
+    var element = document.getElementById("timer");
+    element.remove();
+    userInput = ""
+    goalText = ""
+    startTime = 0
+}
+
+function initGame() {
     getRandomWords().then(randomWords => {
         let words = randomWords.slice(0, 50);
         goalText = words.join(' ');
@@ -33,6 +67,13 @@ function startGame() {
         updateTextElem();
     });
     textElem.style.whiteSpace = "";
+    containElem.prepend(timerElem)
+    timerElem.textContent = "30";
+}
+
+function startGame() {
+    startTime = Date.now();
+    requestAnimationFrame(updateTimer);
 }
 
 function updateTextElem() {
@@ -60,10 +101,20 @@ function updateTextElem() {
 }
 
 textElem.addEventListener('click', function(event) {
-    startGame();
+    if (startTime == 0) {
+        initGame();
+    } else {
+        endGame();
+    }
 });
 
 textElem.addEventListener('keydown', function(event) {
+    if (goalText == "") {
+        return
+    }
+    if (startTime == 0) {
+        startGame()
+    }
     if (event.key == 'Backspace') {
         userInput = userInput.slice(0, -1);
     } else {

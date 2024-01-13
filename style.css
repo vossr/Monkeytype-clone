@@ -1,3 +1,7 @@
+:root {
+    --highlight-color: #00cc99;
+}
+
 body, html {
     height: 100%;
     margin: 0;
@@ -5,13 +9,22 @@ body, html {
     justify-content: center;
     align-items: center;
     background: #323437;
+    font-size: 30px;
+    font-family: "Roboto Mono", "Vazirmatn", monospace;
+}
+
+#contain {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+#timer {
+    color: var(--highlight-color);
 }
 
 #keyLogger {
-    width: 80%;
     color: #646669;
-    font-size: 30px;
-    font-family: "Roboto Mono", "Vazirmatn", monospace;
     outline: none;
     outline: none;
     border: none;
@@ -19,12 +32,16 @@ body, html {
 }
 
 @keyframes flashBackground {
-    0%, 100% { background-color: transparent; }
-    50% { background-color: #e2b714; }
+    0%, 100% { 
+        opacity: 1; /* Full opacity */
+    }
+    50% { 
+        opacity: 0.25; /* 25% opacity */
+    }
 }
 
 #cursor {
-    background: #e2b714;
+    background: var(--highlight-color);
     width: 3px;
     height: 30px;
     position: absolute;
