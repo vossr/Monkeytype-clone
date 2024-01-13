@@ -1,5 +1,5 @@
 async function fetchWordList() {
-    const response = await fetch('/wordlist.txt');
+    const response = await fetch('wordlist.txt');
     let text = await response.text();
     let words = text.split('\n').filter(word => word.trim() !== '');
     words = words.map(word => word.replace(/\r$/, ''));
