@@ -1,0 +1,33 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #323437;
+}
+
+#keyLogger {
+    width: 80%;
+    color: #646669;
+    font-size: 30px;
+    font-family: "Roboto Mono", "Vazirmatn", monospace;
+    outline: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+@keyframes flashBackground {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: #e2b714; }
+}
+
+#cursor {
+    background: #e2b714;
+    width: 3px;
+    height: 30px;
+    position: absolute;
+    transform: translateY(4px);
+    animation: flashBackground 1s infinite;
+}
