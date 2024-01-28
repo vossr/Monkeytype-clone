@@ -89,25 +89,37 @@ function startGame() {
 
 function updateTextElem() {
     textElem.innerHTML = '';
-    for (var i = 0; i < goalText.length; i++) {
-        if (i == userInput.length) {
-            var cursor = document.createElement("span");
-            cursor.id = "cursor";
-            textElem.appendChild(cursor);
-        }
 
-        var span = document.createElement('span');
-        span.textContent = goalText[i];
+    var word = document.createElement('div');
+    word.id = "word";
+    for (var i = 0; i < goalText.length; i++) {
+        var character = document.createElement('div');
+        character.id = "character";
+        character.textContent = goalText[i];
         if (i < userInput.length) {
             if (userInput[i] == goalText[i]) {
-                span.style.color = '#d1d0c5';
+                character.style.color = '#d1d0c5';
             } else {
-                span.style.color = '#ca4854';
+                character.style.color = '#ca4854';
             }
         } else {
-            span.style.color = 'grey';
+            character.style.color = 'grey';
         }
-        textElem.appendChild(span);
+
+        if (i == userInput.length) {
+            var cursor = document.createElement("div");
+            cursor.id = "cursor";
+            character.appendChild(cursor);
+        }
+
+
+        word.appendChild(character);
+
+        if (goalText[i] == ' ' || i == goalText.length - 1) {
+            textElem.appendChild(word);
+            word = document.createElement('div');
+            word.id = "word";
+        }
     }
 }
 
