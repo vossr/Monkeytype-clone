@@ -1,9 +1,20 @@
-async function fetchWordList() {
+let cachedWordList = null;
+
+window.onload = async function() {
     const response = await fetch('wordlist.txt');
     let text = await response.text();
-    let words = text.split('\n').filter(word => word.trim() !== '');
-    words = words.map(word => word.replace(/\r$/, ''));
-    return words
+    cachedWordList = text.split('\n').filter(word => word.trim() !== '').map(word => word.replace(/\r$/, ''));
+};
+
+async function fetchWordList() {
+    if (cachedWordList !== null) {
+        return cachedWordList;
+    }
+
+    const response = await fetch('wordlist.txt');
+    let text = await response.text();
+    cachedWordList = text.split('\n').filter(word => word.trim() !== '').map(word => word.replace(/\r$/, ''));
+    return cachedWordList;
 }
 
 async function getRandomWords() {
