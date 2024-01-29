@@ -1,2 +1,3 @@
-Try here: https://rpehkone.github.io/Fat-Finger/  
+#### Try here: https://vossr.github.io/Monkeytype-clone/
+
 monkeytype clone (typing game)  
